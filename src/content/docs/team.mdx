@@ -1,0 +1,63 @@
+---
+title: ""
+head:
+  - tag: title
+    content: "Our Team"
+template: splash
+editUrl: false
+---
+
+import ProfileCard from "@components/ProfileCard.astro";
+
+<div class="px-8 max-w-375 mx-auto">
+
+{" "}
+
+<section class="flex justify-center md:justify-start text-center md:text-left ">
+  <h2 class="font-bold text-3xl lg:text-4xl">Our Team</h2>
+</section>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5 justify-items-center items-start">
+    <ProfileCard
+      name="Benjamin Stevens"
+      location="Fort Collins, CO"
+      socialLinks={[
+        { url: "https://github.com/b3nbino", label: "GitHub", icon: "github" },
+        { url: "https://www.linkedin.com/in/benjamin-j-stevens/", label: "LinkedIn", icon: "linkedin" },
+        { url: "mailto:b3nbinoh@gmail.com", label: "Email", icon: "email" }
+      ]}
+    />
+
+    <ProfileCard
+      name="Saurabh Kamboj"
+      location="Bangalore, India"
+      socialLinks={[
+        { url: "https://github.com/saurabhkamboj", label: "GitHub", icon: "github" },
+        { url: "https://www.linkedin.com/in/saurabhkam/", label: "LinkedIn", icon: "linkedin" },
+        { url: "mailto:skamboj97@gmail.com", label: "Email", icon: "email" }
+      ]}
+    />
+
+    <ProfileCard
+      name="Tyler McGraw"
+      location="San Francisco, CA"
+      socialLinks={[
+        { url: "https://github.com/tylermcgraw", label: "GitHub", icon: "github" },
+        { url: "https://www.linkedin.com/in/tylermcgraw/", label: "LinkedIn", icon: "linkedin" },
+        { url: "mailto:tyler.a.mcgraw@gmail.com", label: "Email", icon: "email" }
+      ]}
+    />
+
+    <ProfileCard
+      name="Xiran Lu"
+      location="Sunnyvale, CA"
+      socialLinks={[
+        { url: "https://github.com/xiranlu427", label: "GitHub", icon: "github" },
+        { url: "https://www.linkedin.com/in/xiran-lu/", label: "LinkedIn", icon: "linkedin" },
+        { url: "mailto:xlu92427@gmail.com", label: "Email", icon: "email" }
+      ]}
+    />
+
+  </div>
+
+</div>

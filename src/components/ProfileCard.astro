@@ -1,0 +1,91 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "@astrojs/starlight/components";
+import type { StarlightIcon } from "@astrojs/starlight/types";
+
+interface SocialLink {
+  url: string;
+  label: string;
+  icon: StarlightIcon; // Use proper Starlight icon type
+}
+
+interface Props extends Omit<HTMLAttributes<"div">, "href"> {
+  name: string;
+  location?: string;
+  bio?: string;
+  profilePictureUrl?: string;
+  socialLinks?: SocialLink[];
+}
+
+const {
+  name,
+  location,
+  bio,
+  profilePictureUrl,
+  socialLinks = [],
+  ...rest
+} = Astro.props;
+
+const avatarSrc =
+  profilePictureUrl;
+---
+
+<article {...rest} >
+  <!-- Profile Picture or Initials -->
+  <div class='relative'>
+    {
+      avatarSrc ? (
+        <img
+          src={avatarSrc}
+          alt={`${name}'s profile picture`}
+          loading='lazy'
+        />
+      ) : (
+        <div>
+          {name
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase())
+            .join("")
+            .slice(0, 2)}
+        </div>
+      )
+    }
+  </div>
+
+  <div>
+    <!-- Name -->
+    <h3>
+      {name}
+    </h3>
+
+    <p>
+      {location}
+    </p>
+    <!-- Bio -->
+    {
+      bio && (
+        <p>
+          {bio}
+        </p>
+      )
+    }
+  </div>
+
+  <!-- Social Links -->
+  {
+    socialLinks.length > 0 && (
+      <div>
+        {socialLinks.map(({ url, icon, label }) => (
+          <a
+            href={url}
+            aria-label={`${name}'s ${label}`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <Icon name={icon} />
+          </a>
+        ))}
+      </div>
+    )
+  }
+</article>

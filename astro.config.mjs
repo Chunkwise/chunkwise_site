@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Chunkwise",
-      favicon: "/favicon.svg",
+      favicon: "/favicon.ico",
       logo: {
         src: "./src/assets/logo.svg",
       },
@@ -19,13 +19,13 @@ export default defineConfig({
           href: "https://github.com/chunkwise",
         },
       ],
+      components: {
+        Header: "./src/components/CustomHeader.astro",
+      },
       sidebar: [
         {
           label: "Case Study",
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example", slug: "case_study/example" },
-          ],
+          autogenerate: { directory: "case_study" },
         },
       ],
       plugins: [
