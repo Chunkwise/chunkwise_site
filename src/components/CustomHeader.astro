@@ -1,9 +1,73 @@
 ---
-import Header from '@astrojs/starlight/components/Header.astro';
-import NavBar from './NavBar.astro';
+// Recreate Starlight's header and add custom NavBar
+import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
+import Search from '@astrojs/starlight/components/Search.astro';
+import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 ---
 
-<Header {...Astro.props}>
-  <slot />
-</Header>
-<NavBar />
+<div class="header-custom">
+  <div class="title-wrapper">
+    <SiteTitle {...Astro.props} />
+  </div>
+
+  <div class="nav-wrapper">
+    <nav class="navbar">
+      <a href="/case_study/overview">Case Study</a>
+      <a href="/team">Team</a>
+    </nav>
+  </div>
+
+  <div class="right-group">
+    <Search {...Astro.props} />
+    <SocialIcons {...Astro.props} />
+    <ThemeSelect {...Astro.props} />
+  </div>
+</div>
+
+<style>
+  .header-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem; 
+  }
+
+  .nav-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: left;
+    padding: 0 1rem;
+  }
+
+  .navbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--sl-color-text-accent); /* Starlight's accent color */
+    font-weight: 500;
+  }
+
+  a:hover {
+    color: var(--sl-color-white); 
+  }
+
+  .right-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Hides Search, Social, and ThemeSelect on mobile */
+  @media (max-width: 50rem) {
+    .right-group {
+      display: none;
+    }
+  }
+</style>
