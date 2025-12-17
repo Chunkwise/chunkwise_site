@@ -47,10 +47,10 @@ AI observability platforms (e.g., [TruLens](https://www.trulens.org/), [Braintru
 
 While these platforms excel at evaluating the overall performance of AI applications, they do not provide targeted evaluation of chunking strategies for retrieval. Hence, they are best suited for teams that have established an effective chunking strategy and seek to optimize other aspects of their AI applications.
 
-|                            | Chunkwise                                                 | Vectorize | Unstructured, Chonkie | DIY |
-| :------------------------- | :-------------------------------------------------------- | :-------- | :-------------------- | :-- |
-| Open Source & Self-Managed | ✅                                                        | ❌        | ❌                    | ✅  |
-| Built-In Platform          | ✅                                                        | ✅        | ✅                    | ❌  |
-| Chunk Visualization        | ✅                                                        | ❌        | ✅                    | ✅  |
-| Retrieval-based Evaluation | ✅                                                        | ✅        | ❌                    | ✅  |
-| ETL Pipeline               | ⚠️ (limited support for data source and document formats) | ✅        | ✅                    | ✅  |
+|                            |                        Chunkwise                         | Vectorize | Unstructured, Chonkie | DIY |
+| :------------------------- | :------------------------------------------------------: | :-------: | :-------------------: | :-: |
+| Open Source & Self-Managed |                            ✓                             |     ✕     |           ✕           |  ✓  |
+| Built-In Platform          |                            ✓                             |     ✓     |           ✓           |  ✕  |
+| Chunk Visualization        |                            ✓                             |     ✕     |           ✓           |  ✓  |
+| Retrieval-based Evaluation |                            ✓                             |     ✓     |           ✕           |  ✓  |
+| ETL Pipeline               | ⏤ (limited support for data source and document formats) |     ✓     |           ✓           |  ✓  |
