@@ -4,6 +4,8 @@ sidebar:
   order: 5
 ---
 
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
+
 Chunkwise consists of two major subsystems:
 
 1. **Experimentation Platform**: supports interactive chunk visualization and retrieval-based evaluation. It adopts a microservice architecture consisting of four components:
@@ -11,8 +13,7 @@ Chunkwise consists of two major subsystems:
    1. Chunking Service
    2. Evaluation Service
    3. Backend Server
-   4. Client  
-
+   4. Client
 
 2. **Data Ingestion Pipeline**: applies a selected chunking strategy to the user’s entire corpus and stores embeddings in a vector database for downstream RAG applications.
 
@@ -91,8 +92,11 @@ The ingestion pipeline performs four responsibilities:
 
 Below is the end-to-end lifecycle of a Chunkwise workflow, which begins with file upload and processing, proceeds through chunk visualization and retrieval-based evaluation, and culminates in ingesting a user-provided dataset into a vector store using a specified chunking strategy.
 
-**1\. Workflow Creation: Client ⇌ Backend ⇌ Database**  
-**![][image17]**  
+**1\. Workflow Creation: Client ⇌ Backend ⇌ Database**
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/create_workflow.lottie" style="width: 500px;height: 500px" autoplay loop></dotlottie-wc>
+
+<!-- **![][image17]**  -->
+
 The user creates a new workflow from the UI.
 
 The backend creates a corresponding workflow record in the evaluation database (an RDS Postgres instance).
