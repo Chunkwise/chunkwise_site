@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import catppuccin from "@catppuccin/starlight";
+import starlightThemeFlexoki from "starlight-theme-flexoki";
 import starlightImageZoom from "starlight-image-zoom";
 
 // https://astro.build/config
@@ -39,7 +39,12 @@ export default defineConfig({
         maxHeadingLevel: 4,
       },
       routeMiddleware: "./src/routeData.ts",
-      plugins: [starlightImageZoom()],
+      plugins: [
+        starlightImageZoom(),
+        starlightThemeFlexoki({
+          accentColor: "blue",
+        }),
+      ],
     }),
   ],
 });
