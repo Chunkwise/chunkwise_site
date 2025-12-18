@@ -1,20 +1,16 @@
 ---
 title: "Team"
-head:
-  - tag: title
-    content: "Chunkwise"
 template: splash
 editUrl: false
-hero:
-  title: "Our Team"
 ---
 
 import ProfileCard from "@components/ProfileCard.astro";
 
-<div>
+<div class="row">
   <ProfileCard
     name="Benjamin Stevens"
     location="Fort Collins, CO"
+    profilePictureUrl="https://avatars.githubusercontent.com/u/145062994?v=4"
     socialLinks={[
       { url: "https://github.com/b3nbino", label: "GitHub", icon: "github" },
       {
@@ -30,6 +26,7 @@ import ProfileCard from "@components/ProfileCard.astro";
 
 <ProfileCard
   name="Saurabh Kamboj"
+  profilePictureUrl="https://avatars.githubusercontent.com/u/78675973?v=4"
   location="Bangalore, India"
   socialLinks={[
     {
@@ -50,6 +47,7 @@ import ProfileCard from "@components/ProfileCard.astro";
 
 <ProfileCard
   name="Tyler McGraw"
+  profilePictureUrl="https://avatars.githubusercontent.com/u/7329877?v=4"
   location="San Francisco, CA"
   socialLinks={[
     { url: "https://github.com/tylermcgraw", label: "GitHub", icon: "github" },
@@ -66,6 +64,7 @@ import ProfileCard from "@components/ProfileCard.astro";
 
 <ProfileCard
   name="Xiran Lu"
+  profilePictureUrl="https://avatars.githubusercontent.com/u/54374907?v=4"
   location="San Francisco, CA"
   socialLinks={[
     { url: "https://github.com/xiranlu427", label: "GitHub", icon: "github" },

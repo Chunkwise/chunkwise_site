@@ -2,16 +2,20 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import catppuccin from "@catppuccin/starlight";
+import starlightImageZoom from "starlight-image-zoom";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://Chunkwise.github.io",
+  vite: {
+    assetsInclude: ["**/*.lottie"],
+  },
   integrations: [
     starlight({
       title: "Chunkwise",
       favicon: "/favicon.ico",
       logo: {
-        src: "./src/assets/logo.svg",
+        src: "/src/assets/logos/logo.svg",
       },
       social: [
         {
@@ -22,6 +26,8 @@ export default defineConfig({
       ],
       components: {
         Header: "./src/components/CustomHeader.astro",
+        ThemeProvider: "./src/components/ThemeProvider.astro",
+        ThemeSelect: "./src/components/ToggleTheme.astro",
       },
       sidebar: [
         {
@@ -29,7 +35,11 @@ export default defineConfig({
           autogenerate: { directory: "case_study" },
         },
       ],
-      plugins: [],
+      tableOfContents: {
+        maxHeadingLevel: 4,
+      },
+      routeMiddleware: "./src/routeData.ts",
+      plugins: [starlightImageZoom()],
     }),
   ],
 });

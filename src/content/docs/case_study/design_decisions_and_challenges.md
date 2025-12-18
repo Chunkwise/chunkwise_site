@@ -1,0 +1,81 @@
+---
+title: Design Decisions & Challenges
+sidebar:
+  order: 6
+---
+
+#### Choosing Chunkers Across Providers
+
+We selected eight chunkers—five from [Chonkie](https://docs.chonkie.ai/common/open-source#advanced-chunkers) and three from [LangChain](https://docs.langchain.com/oss/python/integrations/splitters/index#text-splitters)—to represent a broad range of commonly used text-based chunking strategies. Chonkie offers the most comprehensive open-source chunking library. Out of their nine available chunkers, we selected `TokenChunker`, `SentenceChunker`, `RecursiveChunker`, `SemanticChunker`, and `SlumberChunker` (an LLM-based, agentic chunker). To enable cross-provider comparison of the most common chunkers, we also included LangChain’s widely adopted baseline chunkers: `TokenTextSplitter`, `CharacterTextSplitter`, and `RecursiveCharacterTextSplitter`.
+
+We intentionally excluded document-type-specific chunkers (e.g., HTML, table, or code chunkers) to focus this iteration on general-purpose text chunking, which is the most common RAG use case, and avoids the additional parsing complexity inherent to those structured formats.
+
+Differences in tokenization behavior, whitespace handling, and offset calculations across providers required building a document-normalization layer. This ensures consistent chunk metadata is created for downstream chunk visualization and evaluation operations.
+
+Moreover, semantic and slumber chunkers impose significantly higher latency and cost due to embedding generation and LLM API calls. To mitigate this, the client displays warnings before users run these chunkers, and the production deployment of the slumber chunker is disabled to prevent accidental large-scale LLM API calls during data ingestion.
+
+The following table shows the results of a load test conducted on a corpus of 1,014 documents (ranging from \~1 KB to 10 MB) with a total size of 40 MB.
+
+| Chunker                   | Shortest job | Longest job |
+| :------------------------ | :----------- | :---------- |
+| Chonkie Token             | 5:22         | 12:47       |
+| Chonkie Sentence          | 5:49         | 12:33       |
+| Chonkie Recursive         | 6:05         | 14:41       |
+| Chonkie Slumber\*         | $$$          | $$$         |
+| Chonkie Semantic          | 9:39         | 37:28       |
+| LangChain Token           | 4:33         | 12:03       |
+| LangChain Recursive\*\*   | 3:47         | 11:49       |
+| LangChain Character\*\*\* | 0:30         | 6:52        |
+
+\* Chonkie Slumber is an LLM-based chunker, so it is significantly slower and more expensive than the others; therefore, it was not included in this load test.  
+\*\* A larger load test of 1,457 documents (308 MB total) using LangChain Recursive took between 24:22 and 1:34:04  
+\*\*\* LangChain Character splits on “\\n\\n” by default, which can lead to large chunks in some documents. This leads to truncation to fit in the embedding model limits, which reduces runtime.
+
+#### Microservices vs Monolithic Backend
+
+Another key design decision was to implement Chunkwise as a microservice architecture with three FastAPI services—chunking, evaluation, and backend (orchestration)—rather than a single monolithic backend.
+
+This separation aligns with the project’s core concerns: The chunking and evaluation services encapsulate compute-heavy logic and require distinct, specialized dependencies, while the backend remains relatively lightweight, handling request orchestration, workflow persistence, auxiliary operations, and integration with AWS services (S3, RDS, Batch).
+
+Structurally, this allowed us to:
+
+- Deploy and scale chunking and evaluation independently of the backend.
+- Reuse chunking and evaluation as standalone APIs, outside the main UI if needed.
+- Evolve or swap out chunking and evaluation implementations without tightly coupling them to orchestration logic.
+- Isolate failures so that issues in one service (e.g., crashes with LLM-based chunkers) do not bring down the entire system.
+
+The main tradeoff is increased operational and development complexity. Instead of a single process, we manage multiple containers, ECS services, and network paths via Cloud Map. Local development and debugging require running several services simultaneously, and cross-service requests introduce additional latency and failure modes.
+
+Despite these costs, the microservice approach reflects the logical boundaries in Chunkwise’s domain: chunking, evaluation, and orchestration have distinct responsibilities, performance characteristics, and dependency footprints. Treating them as separate services made the system easier to reason about, scale, and extend over time.
+
+#### AWS ECS Fargate vs. AWS Lambda
+
+We initially considered implementing each microservice as an AWS Lambda function to reduce costs. Our first attempt used Lambda layers for dependencies, but the Python libraries required by the chunking and evaluation services exceeded Lambda’s 250 MB unzipped limit, making this approach infeasible. We then attempted to deploy the services as containerized Lambdas, which successfully deployed but failed at runtime: importing certain compute-heavy libraries triggered multiprocessing-related initialization errors, preventing the FastAPI server from starting. These issues arise because the LangChain, Chonkie, and ChromaDB libraries internally rely on multiprocessing primitives that are not fully supported in the Lambda execution environment.
+
+Running the services as long-lived FastAPI applications on AWS ECS Fargate provides a more suitable operational model. Each microservice runs inside a container with all dependencies baked into the image, exposes a stable HTTP interface (including a `/health` endpoint), and integrates with ECS service discovery and load balancing. ECS services can scale horizontally by adjusting the number of running tasks, and Fargate abstracts away all EC2 management. This gives us flexible container orchestration without operating servers or maintaining a Kubernetes control plane.
+
+The primary trade-off is that ECS introduces greater infrastructure complexity and operational costs than Lambda. We had to configure task definitions, services, security groups, and an Application Load Balancer—components that Lambda abstracts away entirely. Moreover, unlike Lambda’s pay-per-request model, ECS charges for tasks that run continuously, regardless of incoming traffic. In our case, this cost model is intentional: Chunkwise’s services are implemented as long-lived FastAPI applications that are always available to support interactive experimentation, predictable request latency, and efficient triggering of data ingestion workflows.
+
+For our dependency-heavy, HTTP-based microservices, this additional infrastructure overhead is justified. ECS Fargate provides predictable performance without Lambda’s cold-start latency and gives us full operational control, which outweighs the simplicity of Lambda’s serverless model.
+
+#### Horizontal Scaling of the ETL Pipeline
+
+We chose to use AWS Batch because it automatically handles scaling our ETL pipeline processing jobs up and down. We made this decision after local testing revealed that a 10 MB document took 140 seconds to process. Given that a knowledge base can consist of thousands of documents, this could lead to wait times measured in days, which we deemed unacceptable.
+
+However, we initially overscaled our jobs – because our team was in OpenAI’s Usage Tier 1, text-embedding-small-3’s 1,000,000 tokens-per-minute rate limit was often the bottleneck. We reduced the maximum number of jobs from 32 to 4, but still frequently hit rate limits. We decided against further reducing the number of jobs because organizations in a higher tier would not face the same bottleneck.
+
+#### File Uploading and Normalization
+
+We chose to handle document uploads for evaluation through the backend rather than instructing users to upload files directly to S3. This ensures that all documents are normalized before reaching any chunking or evaluation logic. During testing, we found that token-based chunkers can fail on text containing multi-byte Unicode characters, such as curly quotes, en/em dashes, and ellipses. Because token chunkers slice text by token count instead of Unicode character boundaries, a token window may end in the middle of a multi-byte character. When this occurs, decoding the token sequence fails and replaces it with the replacement character “�”. This not only creates discrepancies between the generated chunks and the original document but, more critically, causes the evaluation framework—whose excerpt-matching relies on exact substring equality—to fail.
+
+Direct file uploads to S3 bypass both the normalization step and the frontend’s 50 KB file-size cap. Larger files significantly increase latency for LLM query generation, which is the slowest part of evaluation. In our tests, evaluating a 50 KB file with query generation returned in around 30-40 seconds, whereas a 120 KB file often took close to a minute. Handling file uploads through the backend enforces the size limit, ensures that every document is safely normalized, and keeps evaluation latency within a reasonable range.
+
+#### Stable Corpus Identification for Targeted Evaluation
+
+Chroma’s evaluation framework was designed for synthetic evaluation across multiple local corpora, using each corpus’s file path as the `corpus_id` in the queries CSV file. This works in a local environment because file paths serve as stable identifiers.
+
+In Chunkwise, however, we adopted a targeted evaluation approach: instead of evaluating a pre-defined set of corpora, users evaluate a representative document from one selected corpus at a time. This mirrors real RAG workflows, where evaluation is tailored to a specific corpus type, domain, or document style, allowing each corpus to benefit from a custom chunking strategy.
+
+Because documents in Chunkwise are stored in S3 and downloaded to temporary local paths during evaluation, the original file-path-based identification breaks down. Specifically, temporary paths change every run, making it impossible to reliably match a document to its previously generated queries and excerpts.
+
+To solve this issue, we adapted the framework to a single-corpus evaluation model and introduced a `corpus_id_override` mechanism that maps each ephemeral local path to a canonical corpus identifier (the document’s S3 key). This ensures that generated reference sets are consistently stored, retrieved, and reused across evaluations in a cloud-based environment.

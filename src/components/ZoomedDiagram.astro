@@ -1,0 +1,29 @@
+---
+import { Zoom } from 'starlight-image-zoom/components';
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string; // eg "other/overview.png"
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+
+// 1. Glob all images in assets/diagrams folder
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/diagrams/**/*.{png,jpg,jpeg,webp}', { eager: true });
+
+// 2. Try to find the image that matches the requested src
+const imagePath = Object.keys(images).find((path) => path.endsWith(src));
+
+if (!imagePath) {
+  throw new Error(`Diagram not found: "${src}". \nCheck /src/assets/diagrams/`);
+}
+
+const imageMetadata = images[imagePath].default;
+---
+
+<figure>
+  <Zoom label={alt} >
+    <Image src={imageMetadata} alt={alt} />
+  </Zoom>
+</figure>
