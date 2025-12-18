@@ -29,12 +29,7 @@ export default defineConfig({
           autogenerate: { directory: "case_study" },
         },
       ],
-      plugins: [
-        catppuccin({
-          dark: { flavor: "macchiato", accent: "sapphire" },
-          light: { flavor: "latte", accent: "sapphire" },
-        }),
-      ],
+      plugins: [],
     }),
   ],
 });
