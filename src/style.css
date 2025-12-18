@@ -56,3 +56,48 @@
 [data-theme="light"] .link-list a {
   background-color: var(--sl-color-bg-nav);
 }
+
+.header-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.nav-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: left;
+  padding: 0 1rem;
+}
+
+.navbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: #03b9f4; /* Starlight's accent color */
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--sl-color-white);
+}
+
+.right-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Hides Search, Social, and ThemeSelect on mobile */
+@media (max-width: 50rem) {
+  .right-group {
+    display: none;
+  }
+}
