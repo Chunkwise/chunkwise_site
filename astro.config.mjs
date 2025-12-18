@@ -2,10 +2,14 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import catppuccin from "@catppuccin/starlight";
+import starlightImageZoom from "starlight-image-zoom";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://Chunkwise.github.io",
+  vite: {
+    assetsInclude: ["**/*.lottie"],
+  },
   integrations: [
     starlight({
       title: "Chunkwise",
@@ -38,6 +42,7 @@ export default defineConfig({
           dark: { flavor: "macchiato", accent: "sapphire" },
           light: { flavor: "latte", accent: "sapphire" },
         }),
+        starlightImageZoom(),
       ],
     }),
   ],
