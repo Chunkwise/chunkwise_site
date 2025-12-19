@@ -4,6 +4,11 @@ sidebar:
   order: 3
 ---
 
+import { Image } from "astro:assets";
+import chunkwise from "@assets/logos/logo.svg";
+import vectorize from "@assets/logos/vectorize.png";
+import chonkie_and_unstructured from "@assets/logos/chonkie_and_unstructured.png";
+
 ### Chunkwise’s Solution
 
 Chunkwise is an open-source, self-managed platform that addresses the chunking evaluation gap identified in existing solutions. It provides developers with systematic tools to compare chunking strategies and enables them to apply a selected strategy to the ingestion of a specific knowledge base via an easy-to-deploy ETL pipeline for downstream RAG systems.
@@ -52,69 +57,79 @@ While these platforms excel at evaluating the overall performance of AI applicat
     <tr>
       <th></th>
       <th style="vertical-align: middle;">
-        <img 
-          src="/src/assets/logos/logo.png" 
-          width="40px" 
+        <Image
+          src={chunkwise}
+          width="40px"
           alt="Chunkwise"
-          style="display: block; margin: 0 auto;" 
-        >
+          style="display: block; margin: 0 auto;"
+        />
       </th>
       <th style="vertical-align: middle;">
-        <img 
-          src="/src/assets/logos/vectorize.png" 
-          width="70px" 
+        <Image
+          src={vectorize}
+          width="70px"
           alt="Vectorize"
           style="display: block; margin: 0 auto;"
-        >
+        />
       </th>
       <th style="vertical-align: middle;">
-        <img 
-          src="/src/assets/logos/chonkie_and_unstructured.png" 
-          width="150px" 
+        <Image
+          src={chonkie_and_unstructured}
+          width="150px"
           alt="Chonkie and Unstructured"
           style="display: block; margin: 0 auto;"
-        >
+        />
       </th>
-      <th style="vertical-align: middle; text-align: center;">
-        DIY
-      </th>
+      <th style="vertical-align: middle; text-align: center;">DIY</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Open Source & Self-Managed</strong></td>
+      <td>
+        <strong>Open Source & Self-Managed</strong>
+      </td>
       <td align="center">✓</td>
       <td align="center">✕</td>
       <td align="center">✕</td>
       <td align="center">✓</td>
     </tr>
     <tr>
-      <td><strong>Built-In Platform</strong></td>
+      <td>
+        <strong>Built-In Platform</strong>
+      </td>
       <td align="center">✓</td>
       <td align="center">✓</td>
       <td align="center">✓</td>
       <td align="center">✕</td>
     </tr>
     <tr>
-      <td><strong>Chunk Visualization</strong></td>
+      <td>
+        <strong>Chunk Visualization</strong>
+      </td>
       <td align="center">✓</td>
       <td align="center">✕</td>
       <td align="center">✓</td>
       <td align="center">✓</td>
     </tr>
     <tr>
-      <td><strong>Retrieval-Based Evaluation</strong></td>
+      <td>
+        <strong>Retrieval-Based Evaluation</strong>
+      </td>
       <td align="center">✓</td>
       <td align="center">✓</td>
       <td align="center">✕</td>
       <td align="center">✓</td>
     </tr>
     <tr>
-      <td><strong>ETL Pipeline</strong></td>
-      <td align="center">⏤ <br>(limited support for data source and document formats)</td>
+      <td>
+        <strong>ETL Pipeline</strong>
+      </td>
+      <td align="center">
+        ⏤ <br>(limited support for data source and document formats)</br>
+      </td>
       <td align="center">✓</td>
       <td align="center">✓</td>
       <td align="center">✓</td>
     </tr>
-    </tbody>
+  </tbody>
 </table>
