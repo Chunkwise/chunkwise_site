@@ -8,7 +8,6 @@ import ZoomedDiagram from "@components/ZoomedDiagram.astro";
 
 ### Chunkwise’s Solution
 
-\[DIAGRAM\]  
 Chunkwise is an open-source, self-managed platform that addresses the chunking evaluation gap identified in existing solutions. It provides developers with systematic tools to compare chunking strategies and enables them to apply a selected strategy to the ingestion of a specific knowledge base via an easy-to-deploy ETL pipeline for downstream RAG systems.
 
 Chunkwise employs a hybrid architecture that balances ease of use with data sovereignty. The client application runs locally in the user’s browsers, providing an intuitive interface for configuring chunking strategies and viewing evaluation results. The backend services are deployed and operated within the user’s Amazon Web Services (AWS) environment, allowing the user to retain full control over their infrastructure and data while benefiting from simplified, automated deployment and cost transparency.
@@ -17,7 +16,6 @@ Chunkwise is designed for teams seeking to optimize their chunking strategies fo
 
 #### Experimentation Platform
 
-\[DIAGRAM\]  
 Chunkwise supports systematic evaluation of chunking strategies through chunk visualization, distribution statistics, and retrieval-based evaluation metrics. For qualitative inspection, Chunkwise adapts [Chonkie](https://github.com/chonkie-inc/chonkie)’s visualization tool to provide a real-time representation of a chunked document, along with statistics summarizing the resulting chunks. This allows the user to identify issues such as inappropriate chunk boundaries and loss of semantic coherence. For quantitative evaluation, Chunkwise implements [Chroma](https://github.com/brandonstarxel/chunking_evaluation)’s chunking evaluation framework to benchmark chunking strategies for retrieval performance.
 
 #### AI-Focused ETL Pipeline

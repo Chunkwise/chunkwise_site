@@ -93,7 +93,6 @@ To address chunking challenges, various chunking strategies have emerged, each w
 
 ##### Chunking Parameters
 
-\[DIAGRAM\]  
 Implementations of these approaches are available in a number of open-source libraries such as LangChain and Chonkie. While the choice of chunking approach determines how chunks are created, the configurable parameters it exposes control those outputs at a more granular level.
 
 Most chunkers typically share two core parameters:
@@ -111,7 +110,6 @@ Together, the choice of chunking method and its configuration parameters define 
 
 ### Chunking Evaluation
 
-\[DIAGRAM\]  
 Given the wide range of chunking methods and configuration options, selecting an optimal chunking strategy is challenging. Because document structures and contents vary, chunking cannot be treated as a fixed choice. Small adjustments in chunk size, overlap, separators, or other parameters can significantly affect retrieval performance. Different chunkers behave differently across data formats such as Markdown, code, or mixed-structure documents. Moreover, various downstream task requirements, such as retrieval precision, context length, latency constraints, and embedding cost, impose different demands on chunk granularity and structure. Therefore, systematic evaluation of chunking strategies is a critical step in data ingestion pipelines for RAG systems.
 
 As one of the leading open-source vector database providers, Chroma (2024)[^5] states:
@@ -122,7 +120,6 @@ Despite the significance of chunking decisions, existing chunking libraries (suc
 
 #### Chunk Visualization
 
-\[DIAGRAM\]  
 The most straightforward form of chunking evaluation is chunk visualization. Visual inspection allows users to qualitatively assess whether generated chunks have desirable properties, i.e., semantic coherence and structural integrity. Accompanying the visualization, chunk distribution statistics, including the total number of chunks, average chunk size, and minimum/maximum chunk lengths, provide quantitative insights into the shape of the resulting chunk set. These values also inform whether a strategy is compatible with a specific embedding model, particularly whether the largest chunk fits within the model’s maximum context window.
 
 #### Retrieval-Based Evaluation
