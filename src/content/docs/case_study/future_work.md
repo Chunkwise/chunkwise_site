@@ -22,7 +22,7 @@ One improvement is to expose additional settings that influence the automatic qu
 
 For users who already have domain-specific or commonly expected queries, the ability to provide custom query inputs would provide even greater flexibility. This would give users the most realistic evaluation results by aligning retrieval tests with the actual queries their systems will handle.
 
-### Efficiency \& Transparency
+### Efficiency & Transparency
 
 The use of LLMs in applications makes certain actions somewhat unpredictable, not only in the eventual output of the model but also in the amount of tokens used and the time it takes. Improving these factors and providing transparency around these kinds of actions within Chunkwise would improve users’ experience and make it more viable in today's highly efficient tech landscape.
 
