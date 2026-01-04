@@ -5,7 +5,7 @@ sidebar:
 ---
 
 import ZoomedDiagram from "@components/ZoomedDiagram.astro";
-import create_workflow from "@assets/diagrams/animations/create_workflow.lottie";
+import LottieAnimation from "@components/LottieAnimation.astro";
 
 <script
   src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js"
@@ -119,7 +119,11 @@ Below is the end-to-end lifecycle of a Chunkwise workflow, which begins with fil
 
 **1\. Workflow Creation**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/create_workflow.lottie" aria-label="An animated diagram showing the request flow for workflow creation" role="img" style="aspect-ratio: 3208 / 493;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="create_workflow.lottie"
+  alt="An animated diagram showing the request flow for workflow creation"
+  aspectRatio="3208 / 493"
+/>
 
 The user creates a new workflow from the UI.
 
@@ -127,7 +131,11 @@ The backend creates a corresponding workflow record in the evaluation database (
 
 **2\. Document Handling**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/upload_document.lottie" aria-label="An animated diagram showing the request flow for document upload and normalization" role="img" style="aspect-ratio: 3208 / 493;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="upload_document.lottie"
+  alt="An animated diagram showing the request flow for document upload and normalization"
+  aspectRatio="3208 / 493"
+/>
 
 The backend retrieves a list of previously uploaded documents from the private S3 bucket provisioned during deployment.
 
@@ -137,7 +145,11 @@ The backend then normalizes the document by converting Unicode characters (e.g.,
 
 **3\. Chunk Visualization**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/visualization.lottie" aria-label="An animated diagram showing the request flow for chunk visualization" role="img" style="aspect-ratio: 3208 / 2293;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="visualization.lottie"
+  alt="An animated diagram showing the request flow for chunk visualization"
+  aspectRatio="3208 / 2293"
+/>
 
 Chunk visualization requires three inputs:
 
@@ -155,7 +167,11 @@ This provides real-time feedback as the user iterates on different chunking stra
 
 **4\. Chunking Evaluation**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/evaluation.lottie" aria-label="An animated diagram showing the request flow for chunk evaluation" role="img" style="aspect-ratio: 3500 / 2293;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="evaluation.lottie"
+  alt="An animated diagram showing the request flow for chunk evaluation"
+  aspectRatio="3500 / 2293"
+/>
 
 When the user triggers evaluation on the selected chunking strategy, the service:
 
@@ -168,13 +184,21 @@ The backend extracts the metrics from the evaluation response and stores them in
 
 **5\. Workflow Comparison**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/compare_workflows.lottie" aria-label="An animated diagram showing the request flow for workflow comparison" role="img" style="aspect-ratio: 3208 / 493;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="compare_workflows.lottie"
+  alt="An animated diagram showing the request flow for workflow comparison"
+  aspectRatio="3208 / 493"
+/>
 
 The comparison view allows the user to analyze how different chunking strategies behave across workflows by holding selected parameters constant while changing others. This enables more systematic and controlled evaluation of chunking quality.
 
 **6\. Deployment to Ingestion Pipeline**
 
-<dotlottie-wc src="/src/assets/diagrams/animations/process_documents.lottie" aria-label="An animated diagram showing the request flow for deployment of the ingestion pipeline" role="img" style="aspect-ratio: 3210 / 2293;" autoplay loop></dotlottie-wc>
+<LottieAnimation
+  src="process_documents.lottie"
+  alt="An animated diagram showing the request flow for deployment of the ingestion pipeline"
+  aspectRatio="3210 / 2293"
+/>
 
 When a user deploys a selected chunking strategy, the backend triggers the ingestion pipeline. The pipeline processes the entire corpus using the finalized strategy and stores chunks and embeddings in the pipeline database for downstream retrieval systems.
 

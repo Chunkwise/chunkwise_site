@@ -1,0 +1,30 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  aspectRatio: string;
+}
+
+const { src, alt, aspectRatio } = Astro.props;
+
+// Glob all lottie files in assets/diagrams/animations folder
+const animations = import.meta.glob<{ default: string }>('/src/assets/diagrams/animations/*.lottie', { eager: true });
+
+// Try to find the animation that matches the requested src
+const animationPath = Object.keys(animations).find((path) => path.endsWith(src));
+
+if (!animationPath) {
+  throw new Error(`Lottie animation not found: "${src}". \nCheck /src/assets/diagrams/animations/`);
+}
+
+const animationSrc = animations[animationPath].default;
+---
+
+<dotlottie-wc 
+  src={animationSrc} 
+  aria-label={alt} 
+  role="img" 
+  style={`aspect-ratio: ${aspectRatio};`} 
+  autoplay 
+  loop
+></dotlottie-wc>
