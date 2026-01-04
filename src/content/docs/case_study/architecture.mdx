@@ -4,7 +4,8 @@ sidebar:
   order: 5
 ---
 
-import create_workflow from "@assets/diagrams/animations/create_workflow.lottie";
+import ZoomedDiagram from "@components/ZoomedDiagram.astro";
+import create_workflow from "@assets/diagrams/request_flow/lottie/create_workflow.lottie";
 
 <script
   src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js"
@@ -28,7 +29,11 @@ These two subsystems are unified through the backend server, which coordinates b
 
 #### Chunking Service
 
-![][image12]  
+<ZoomedDiagram
+  src="architecture/chunking_service.png"
+  alt="Chunking Service connects to Backend Service, implements Chonkie/LangChain chunkers"
+/>
+
 Functions as both a standalone chunking API and as an internal component supporting the visualization workflow. It provides a uniform interface for 8 chunkers from LangChain and Chonkie.
 
 Given a chunking strategy and a document in the form of a string, the service:
@@ -41,7 +46,11 @@ The service standardizes chunk output across different chunker providers, enabli
 
 #### Evaluation Service
 
-![][image13]  
+<ZoomedDiagram
+  src="architecture/evaluation_service.png"
+  alt="Evaluation Service connects to Backend Service and S3, implements Chonkie/LangChain chunkers and Chroma evaluation framework"
+/>
+
 Operates as both a self-contained chunking-evaluation API and an internal microservice powering retrieval-based assessment in the platform.
 
 Given an evaluation request that contains a chunking strategy and a document identifier, the service:
@@ -55,7 +64,11 @@ Given an evaluation request that contains a chunking strategy and a document ide
 
 #### Backend Server
 
-![][image14]  
+<ZoomedDiagram
+  src="architecture/backend_service.png"
+  alt="Backend Service with connections to Client, Workflow/Vector Databases, S3, and Chunking/Evaluation/Processing Services"
+/>
+
 Orchestrates all user-facing workflows.
 
 Its responsibilities include:
@@ -81,10 +94,17 @@ Provides the user interface for configuring, executing, and comparing chunking e
 
 #### Data Ingestion Pipeline
 
-![][image15]  
+<ZoomedDiagram
+  src="architecture/processing_service.png"
+  alt="AWS Batch creates jobs that read from S3 and write to a Vector Database"
+/>
+
 The ingestion pipeline is the production component of Chunkwise, responsible for applying a finalized chunking strategy to the user’s entire corpus and storing chunk embeddings for downstream retrieval use cases. When a user deploys a workflow, the backend initiates a processing sequence that operates across all documents associated with the knowledge base.
 
-![][image16]
+<ZoomedDiagram
+  src="other/etl_chunkwise.png"
+  alt="Chunkwise processing pipeline: Source --> Chunker --> Embedding Model --> Destination Database"
+/>
 
 The ingestion pipeline performs four responsibilities:
 
@@ -97,23 +117,28 @@ The ingestion pipeline performs four responsibilities:
 
 Below is the end-to-end lifecycle of a Chunkwise workflow, which begins with file upload and processing, proceeds through chunk visualization and retrieval-based evaluation, and culminates in ingesting a user-provided dataset into a vector store using a specified chunking strategy.
 
-**1\. Workflow Creation: Client ⇌ Backend ⇌ Database**
-<dotlottie-wc src={create_workflow} style="width: 750px;height: 100px" autoplay loop></dotlottie-wc>
+**1\. Workflow Creation**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/create_workflow.lottie"  style="height: 150px" aria-label="An animated diagram showing the request flow for workflow creation" role="img" autoplay loop></dotlottie-wc>
 
 The user creates a new workflow from the UI.
 
 The backend creates a corresponding workflow record in the evaluation database (an RDS Postgres instance).
 
-**2\. Document Handling: Client ⇌ Backend ⇌ Storage**  
-**![][image18]**  
+**2\. Document Handling**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/upload_document.lottie" style="height: 150px" aria-label="An animated diagram showing the request flow for document upload and normalization" role="img" autoplay loop></dotlottie-wc>
+
 The backend retrieves a list of previously uploaded documents from the private S3 bucket provisioned during deployment.
 
 The user may select an existing document or upload a new `.txt` or `.md` file (limited to 50 KB for latency considerations).
 
 The backend then normalizes the document by converting Unicode characters (e.g., smart quotes and dashes) to ASCII characters, preparing it for safe consumption by downstream services.
 
-**3\. Chunk Visualization: Client ⇌ (Backend ↔ Database) ⇌ Chunking Service**  
-**![][image19]**  
+**3\. Chunk Visualization**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/visualization.lottie" aria-label="An animated diagram showing the request flow for chunk visualization" role="img" autoplay loop></dotlottie-wc>
+
 Chunk visualization requires three inputs:
 
 - A sample document
@@ -128,8 +153,10 @@ As the user adjusts any of these inputs, the backend:
 
 This provides real-time feedback as the user iterates on different chunking strategies.
 
-**4\. Chunking Evaluation: Client ⇌ (Backend ↔ Database) ⇌ Evaluation Service ⇌ Storage**  
-**![][image20]**  
+**4\. Chunking Evaluation**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/evaluation.lottie" aria-label="An animated diagram showing the request flow for chunk evaluation" role="img" autoplay loop></dotlottie-wc>
+
 When the user triggers evaluation on the selected chunking strategy, the service:
 
 1. Loads the document from S3.
@@ -139,17 +166,24 @@ When the user triggers evaluation on the selected chunking strategy, the service
 
 The backend extracts the metrics from the evaluation response and stores them in the workflow record. It then displays them in the UI.
 
-**5\. Workflow Comparison: Client ⇌ Backend ⇌ Database**  
-**![][image21]**  
+**5\. Workflow Comparison**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/compare_workflows.lottie" style="height: 150px" aria-label="An animated diagram showing the request flow for workflow comparison" role="img" autoplay loop></dotlottie-wc>
+
 The comparison view allows the user to analyze how different chunking strategies behave across workflows by holding selected parameters constant while changing others. This enables more systematic and controlled evaluation of chunking quality.
 
-**6\. Deployment to Ingestion Pipeline: Client ⇌ Backend ⇌ Pipeline**  
-**![][image22]**  
+**6\. Deployment to Ingestion Pipeline**
+
+<dotlottie-wc src="/src/assets/diagrams/request_flow/lottie/process_documents.lottie" aria-label="An animated diagram showing the request flow for deployment of the ingestion pipeline" role="img" autoplay loop></dotlottie-wc>
+
 When a user deploys a selected chunking strategy, the backend triggers the ingestion pipeline. The pipeline processes the entire corpus using the finalized strategy and stores chunks and embeddings in the pipeline database for downstream retrieval systems.
 
 ### Deployment Architecture (AWS)
 
-#### ![][image23]
+<ZoomedDiagram
+  src="architecture/VPC.png"
+  alt="Full AWS Architecture: VPC, Public Subnet (Load Balancer, Vector RDS), Private Subnet (ECS Services for Backend/Chunking/Evaluation, Workflow RDS, AWS Batch on Fargate ECS)"
+/>
 
 #### Platform Architecture (Core Services)
 

@@ -21,32 +21,15 @@ The following table shows the results of a load test conducted on a corpus of 1,
 | Chonkie Token             | 5:22         | 12:47       |
 | Chonkie Sentence          | 5:49         | 12:33       |
 | Chonkie Recursive         | 6:05         | 14:41       |
-| Chonkie Slumber\*         | $$$          | $$$         |
+| Chonkie Slumber\*         | \-           | \-          |
 | Chonkie Semantic          | 9:39         | 37:28       |
 | LangChain Token           | 4:33         | 12:03       |
 | LangChain Recursive\*\*   | 3:47         | 11:49       |
 | LangChain Character\*\*\* | 0:30         | 6:52        |
 
 \* Chonkie Slumber is an LLM-based chunker, so it is significantly slower and more expensive than the others; therefore, it was not included in this load test.  
-\*\* A larger load test of 1,457 documents (308 MB total) using LangChain Recursive took between 24:22 and 1:34:04  
+\*\* A larger load test of 1,457 documents (308 MB total) using LangChain Recursive took between 24:22 (shortest job) and 1:34:04 (longest job)  
 \*\*\* LangChain Character splits on “\\n\\n” by default, which can lead to large chunks in some documents. This leads to truncation to fit in the embedding model limits, which reduces runtime.
-
-#### Microservices vs Monolithic Backend
-
-Another key design decision was to implement Chunkwise as a microservice architecture with three FastAPI services—chunking, evaluation, and backend (orchestration)—rather than a single monolithic backend.
-
-This separation aligns with the project’s core concerns: The chunking and evaluation services encapsulate compute-heavy logic and require distinct, specialized dependencies, while the backend remains relatively lightweight, handling request orchestration, workflow persistence, auxiliary operations, and integration with AWS services (S3, RDS, Batch).
-
-Structurally, this allowed us to:
-
-- Deploy and scale chunking and evaluation independently of the backend.
-- Reuse chunking and evaluation as standalone APIs, outside the main UI if needed.
-- Evolve or swap out chunking and evaluation implementations without tightly coupling them to orchestration logic.
-- Isolate failures so that issues in one service (e.g., crashes with LLM-based chunkers) do not bring down the entire system.
-
-The main tradeoff is increased operational and development complexity. Instead of a single process, we manage multiple containers, ECS services, and network paths via Cloud Map. Local development and debugging require running several services simultaneously, and cross-service requests introduce additional latency and failure modes.
-
-Despite these costs, the microservice approach reflects the logical boundaries in Chunkwise’s domain: chunking, evaluation, and orchestration have distinct responsibilities, performance characteristics, and dependency footprints. Treating them as separate services made the system easier to reason about, scale, and extend over time.
 
 #### AWS ECS Fargate vs. AWS Lambda
 
@@ -70,9 +53,9 @@ We chose to handle document uploads for evaluation through the backend rather th
 
 Direct file uploads to S3 bypass both the normalization step and the frontend’s 50 KB file-size cap. Larger files significantly increase latency for LLM query generation, which is the slowest part of evaluation. In our tests, evaluating a 50 KB file with query generation returned in around 30-40 seconds, whereas a 120 KB file often took close to a minute. Handling file uploads through the backend enforces the size limit, ensures that every document is safely normalized, and keeps evaluation latency within a reasonable range.
 
-#### Stable Corpus Identification for Targeted Evaluation
+#### Stable Data Corpus Identification for Targeted Evaluation
 
-Chroma’s evaluation framework was designed for synthetic evaluation across multiple local corpora, using each corpus’s file path as the `corpus_id` in the queries CSV file. This works in a local environment because file paths serve as stable identifiers.
+Chroma’s evaluation framework was designed for synthetic evaluation across multiple local corpora (i.e., datasets), using each corpus’s file path as the `corpus_id` in the queries CSV file. This works in a local environment because file paths serve as stable identifiers.
 
 In Chunkwise, however, we adopted a targeted evaluation approach: instead of evaluating a pre-defined set of corpora, users evaluate a representative document from one selected corpus at a time. This mirrors real RAG workflows, where evaluation is tailored to a specific corpus type, domain, or document style, allowing each corpus to benefit from a custom chunking strategy.
 
