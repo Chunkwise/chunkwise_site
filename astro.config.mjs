@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import catppuccin from "@catppuccin/starlight";
+import starlightThemeFlexoki from "starlight-theme-flexoki";
 import starlightImageZoom from "starlight-image-zoom";
 
 // https://astro.build/config
@@ -40,11 +40,10 @@ export default defineConfig({
       },
       routeMiddleware: "./src/routeData.ts",
       plugins: [
-        catppuccin({
-          dark: { flavor: "macchiato", accent: "sapphire" },
-          light: { flavor: "latte", accent: "sapphire" },
-        }),
         starlightImageZoom(),
+        starlightThemeFlexoki({
+          accentColor: "blue",
+        }),
       ],
     }),
   ],

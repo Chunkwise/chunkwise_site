@@ -1,3 +1,13 @@
+:root {
+  --sl-color-accent-low: #02137b;
+  --sl-color-accent: #03b9f4;
+  --sl-color-accent-high: #e8dfe2;
+}
+
+main .hero h1 {
+  columns: white;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -14,16 +24,8 @@
   margin: 6px;
   padding: 12px 20px;
   border-radius: 12px;
-}
-
-.profile {
-  border: 1px solid var(--sl-color-gray-4);
-  background-color: var(--sl-color-gray-5);
-}
-
-[data-theme="light"] .profile {
-  border: 1px solid var(--sl-color-bg-nav);
-  background-color: var(--sl-color-bg);
+  border: 1px solid #d8d6ca;
+  background-color: #eceade;
 }
 
 .profile h3 {
@@ -49,4 +51,63 @@
 
 [data-theme="light"] .link-list a {
   background-color: var(--sl-color-bg-nav);
+}
+
+.header-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.title-wrapper a {
+  font-family: monospace;
+  font-size: 38px;
+}
+
+.nav-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: left;
+  margin-left: 48px;
+}
+
+.navbar {
+  display: flex;
+  gap: 24px;
+}
+
+.navbar a {
+  font-size: 20px;
+}
+
+.navbar a:hover {
+  color: var(--sl-color-accent-low);
+}
+
+header a {
+  text-decoration: none;
+  color: var(--sl-color-accent); /* Starlight's accent color */
+}
+
+.right-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 350px;
+}
+
+/* Hides Search, Social, and ThemeSelect on mobile */
+@media (max-width: 50rem) {
+  .right-group {
+    display: none;
+  }
+}
+
+/* Lottie animations - width 100%, aspect-ratio set inline per animation */
+dotlottie-wc {
+  display: block;
+  width: 100%;
 }
