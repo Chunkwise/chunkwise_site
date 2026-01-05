@@ -83,15 +83,17 @@ main .hero h1 {
 
 .navbar {
   display: flex;
-  gap: 24px;
+  gap: 20px;
 }
 
 .navbar a {
   font-size: 16px;
+  color: var(--sl-color-accent-low);
+  font-weight: 500;
 }
 
 .navbar a:hover {
-  color: var(--sl-color-accent-low);
+  color: var(--sl-color-accent);
 }
 
 header a {
@@ -161,7 +163,7 @@ h2, h3, h4, h5, h6 {
 }
 
 .sl-link-button.primary:hover {
-  background: linear-gradient(to left, #02137b, #03b9f4);
+  background: linear-gradient(to left, --sl-color-accent-low, --sl-color-accent);
 }
 
 .sl-link-button.secondary {
@@ -171,7 +173,7 @@ h2, h3, h4, h5, h6 {
 }
 
 .sl-link-button.secondary:hover {
-  background: linear-gradient(to left, #03b9f4, #e8dfe2);
+  background: linear-gradient(to left, --sl-color-accent, --sl-color-accent-high);
 }
 
 .profile:hover {
