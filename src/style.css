@@ -30,8 +30,8 @@ main .hero h1 {
   margin: 6px;
   padding: 12px 20px;
   border-radius: 12px;
-  border: 1px solid #d8d6ca;
-  background-color: #eceade;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .profile h3 {
@@ -172,4 +172,9 @@ h2, h3, h4, h5, h6 {
 
 .sl-link-button.secondary:hover {
   background: linear-gradient(to left, #03b9f4, #e8dfe2);
+}
+
+.profile:hover {
+  box-shadow: 0 5px 10px #c7cefb;
+  transform: translateY(-8px);
 }
