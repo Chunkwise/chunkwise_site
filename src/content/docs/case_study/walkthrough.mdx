@@ -1,0 +1,67 @@
+---
+title: Walkthrough
+sidebar:
+  order: 4
+---
+
+## Deployment
+
+Chunkwise is deployed using a CLI tool. To get started, clone the repository and set up the environment:
+
+```bash
+git clone https://github.com/Chunkwise/chunkwise.git
+cd chunkwise/cli
+poetry install
+eval $(poetry env activate)
+typer cli.py run deploy
+```
+
+Once deployed, you can build and run the client using the following command:
+
+```bash
+typer cli.py run client-run [--region=REGION]
+```
+
+![Deployment Process](../../../assets/walkthrough/deployment.gif)
+
+---
+
+## Platform
+
+The Chunkwise platform provides four main features to help you optimize your chunking workflows:
+
+### Visualisation
+
+_[Placeholder: Describe what users can visualise in the platform, such as viewing how documents are chunked, inspecting chunk boundaries, etc.]_
+
+<video controls width="100%">
+  <source src="../../../assets/walkthrough/visualisation.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+### Evaluation
+
+_[Placeholder: Describe how users can evaluate their chunking strategies, view metrics like precision/recall, compare against ground truth, etc.]_
+
+<video controls width="100%">
+  <source src="../../../assets/walkthrough/evaluation.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+### Comparison
+
+_[Placeholder: Describe how users can compare multiple chunking workflows side-by-side, analyze differences in output, benchmark performance, etc.]_
+
+<video controls width="100%">
+  <source src="../../../assets/walkthrough/comparison.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+### Deploy
+
+_[Placeholder: Describe how users can deploy their optimized chunking workflow to production, configure deployment settings, etc.]_
+
+<video controls width="100%">
+  <source src="../../../assets/walkthrough/deploy.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
