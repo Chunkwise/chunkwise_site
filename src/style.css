@@ -84,6 +84,7 @@ main .hero h1 {
 .navbar {
   display: flex;
   gap: 24px;
+  opacity: 0.8;
 }
 
 .navbar a {
@@ -160,9 +161,16 @@ h2, h3, h4, h5, h6 {
   color: white;
 }
 
+.sl-link-button.primary:hover {
+  background: linear-gradient(to left, #02137b, #03b9f4);
+}
+
 .sl-link-button.secondary {
   background: var(--gradient-secondary);
   color: black;
   border: none;
 }
 
+.sl-link-button.secondary:hover {
+  background: linear-gradient(to left, #03b9f4, #e8dfe2);
+}
