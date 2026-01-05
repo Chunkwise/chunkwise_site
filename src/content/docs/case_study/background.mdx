@@ -93,6 +93,12 @@ To address chunking challenges, various chunking strategies have emerged, each w
 
 ##### Chunking Parameters
 
+<iframe
+  src="https://player.mux.com/LrEF4BmQX2aC6Bgs466EwTHXGoz93ooeNcQRaLF4B7s?autoplay=true&loop=true&muted=true&accent-color=%2303B9F4"
+  style="width: 100%; border: none; aspect-ratio: 1198/805; pointer-events: none;"
+  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+></iframe>
+
 Implementations of these approaches are available in a number of open-source libraries such as LangChain and Chonkie. While the choice of chunking approach determines how chunks are created, the configurable parameters it exposes control those outputs at a more granular level.
 
 Most chunkers typically share two core parameters:
@@ -120,9 +126,19 @@ Despite the significance of chunking decisions, existing chunking libraries (suc
 
 #### Chunk Visualization
 
+<ZoomedDiagram
+  src="screenshots/visualization.png"
+  alt="A screenshot of the client showing the visualization tab"
+/>
+
 The most straightforward form of chunking evaluation is chunk visualization. Visual inspection allows users to qualitatively assess whether generated chunks have desirable properties, i.e., semantic coherence and structural integrity. Accompanying the visualization, chunk distribution statistics, including the total number of chunks, average chunk size, and minimum/maximum chunk lengths, provide quantitative insights into the shape of the resulting chunk set. These values also inform whether a strategy is compatible with a specific embedding model, particularly whether the largest chunk fits within the model’s maximum context window.
 
 #### Retrieval-Based Evaluation
+
+<ZoomedDiagram
+  src="screenshots/evaluation.png"
+  alt="A screenshot of the client showing the evaluation tab"
+/>
 
 While chunk visualization and statistics offer descriptive insights, they do not directly measure how effectively a chunking strategy supports retrieval. Evaluating chunking through retrieval performance yields more actionable insights by revealing which strategies best surface relevant information for a specific retrieval task. Yet, despite chunking being a fundamental step in RAG data ingestion, research and tooling for retrieval-based evaluation of chunking strategies remain limited.
 
