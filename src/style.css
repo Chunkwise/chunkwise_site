@@ -402,6 +402,11 @@ dotlottie-wc {
   margin: var(--spacing-xl) 0;
 }
 
+.sl-markdown-content img[src*="screenshots"] {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* Videos/Iframes */
 .sl-markdown-content iframe {
   margin: 2.5rem 0;
