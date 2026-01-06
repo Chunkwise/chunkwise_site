@@ -39,6 +39,8 @@ Once a chunking strategy has been evaluated and selected, Chunkwise provides a d
 
 First, documents are ingested from the specified S3 bucket. Next, they are chunked according to the user’s selected chunking strategy. Each chunk is then embedded using OpenAI’s `text-embedding-3-small` model. Finally, the resulting vector embeddings and metadata are stored in the vector database, where they are available for downstream retrieval or export to other vector databases.
 
+---
+
 ### Existing Solutions
 
 Existing solutions for chunking evaluation and RAG data ingestion pipelines generally fall into three categories:
@@ -62,7 +64,7 @@ AI observability platforms (e.g., [TruLens](https://www.trulens.org/), [Braintru
 
 While these platforms excel at evaluating the overall performance of AI applications, they do not provide targeted evaluation of chunking strategies for retrieval. Hence, they are best suited for teams that have established an effective chunking strategy and seek to optimize other aspects of their AI applications.
 
-#### DIY
+#### DIY (Do it yourself)
 
 Open-source frameworks such as [LlamaIndex](https://github.com/run-llama/llama_index) and [LangChain](https://github.com/langchain-ai/langchain) enable teams to build custom AI applications from the ground up by providing building blocks for constructing RAG data pipelines. They significantly reduce development time while preserving flexibility and control of a custom solution.
 

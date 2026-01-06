@@ -6,7 +6,7 @@ sidebar:
 
 ### Choosing Chunkers Across Providers
 
-We selected eight chunkers—five from [Chonkie](https://docs.chonkie.ai/common/open-source#advanced-chunkers) and three from [LangChain](https://docs.langchain.com/oss/python/integrations/splitters/index#text-splitters)—to represent a broad range of commonly used text-based chunking strategies. Chonkie offers the most comprehensive open-source chunking library. Out of their nine available chunkers, we selected `TokenChunker`, `SentenceChunker`, `RecursiveChunker`, `SemanticChunker`, and `SlumberChunker` (an LLM-based, agentic chunker). To enable cross-provider comparison of the most common chunkers, we also included LangChain’s widely adopted baseline chunkers: `TokenTextSplitter`, `CharacterTextSplitter`, and `RecursiveCharacterTextSplitter`.
+We selected eight chunkers, five from [Chonkie](https://docs.chonkie.ai/common/open-source#advanced-chunkers) and three from [LangChain](https://docs.langchain.com/oss/python/integrations/splitters/index#text-splitters) to represent a broad range of commonly used text-based chunking strategies. Chonkie offers the most comprehensive open-source chunking library. Out of their nine available chunkers, we selected `TokenChunker`, `SentenceChunker`, `RecursiveChunker`, `SemanticChunker`, and `SlumberChunker` (an LLM-based, agentic chunker). To enable cross-provider comparison of the most common chunkers, we also included LangChain’s widely adopted baseline chunkers: `TokenTextSplitter`, `CharacterTextSplitter`, and `RecursiveCharacterTextSplitter`.
 
 We intentionally excluded document-type-specific chunkers (e.g., HTML, table, or code chunkers) to focus this iteration on general-purpose text chunking, which is the most common RAG use case, and avoids the additional parsing complexity inherent to those structured formats.
 
@@ -27,9 +27,11 @@ The following table shows the results of a load test conducted on a corpus of 1,
 | LangChain Recursive\*\*   | 3:47         | 11:49       |
 | LangChain Character\*\*\* | 0:30         | 6:52        |
 
+<small>
 \* Chonkie Slumber is an LLM-based chunker, so it is significantly slower and more expensive than the others; therefore, it was not included in this load test.  
 \*\* A larger load test of 1,457 documents (308 MB total) using LangChain Recursive took between 24:22 (shortest job) and 1:34:04 (longest job)  
 \*\*\* LangChain Character splits on “\\n\\n” by default, which can lead to large chunks in some documents. This leads to truncation to fit in the embedding model limits, which reduces runtime.
+</small>
 
 ### AWS ECS Fargate vs. AWS Lambda
 

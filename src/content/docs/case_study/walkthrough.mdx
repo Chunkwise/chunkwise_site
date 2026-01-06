@@ -4,11 +4,9 @@ sidebar:
   order: 4
 ---
 
-## Deployment
+### Deployment
 
 Chunkwise includes a CLI tool that automates infrastructure setup and deployment.
-
-Set up the environment:
 
 ```bash
 git clone https://github.com/Chunkwise/chunkwise.git
@@ -17,10 +15,11 @@ poetry install
 eval $(poetry env activate)
 ```
 
-Deploy the infrastructure:
+Deploy the infrastructure and run the client:
 
 ```bash
 typer cli.py run deploy
+typer cli.py run client-run
 ```
 
 <iframe
@@ -29,23 +28,17 @@ typer cli.py run deploy
   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 ></iframe>
 
-Run the client:
-
-```bash
-typer cli.py run client-run [--region=REGION]
-```
-
 ---
 
-## Client
+### Client
 
 The Chunkwise client provides an environment for comparing and evaluating chunking strategies before deploying them to production.
 
-### Experimentation Platform
+#### Experimentation Platform
 
 The experimentation platform allows users to test and evaluate different chunking strategies before deployment.
 
-#### Visualization
+##### Visualization
 
 Users can create a workflow, upload a document and select a chunker. Users can also adjust the chunking configurations. The interface displays how the document is split into chunks, showing chunk boundaries and distribution statistics.
 
@@ -56,7 +49,7 @@ Users can create a workflow, upload a document and select a chunker. Users can a
   allowfullscreen
 ></iframe>
 
-#### Evaluation
+##### Evaluation
 
 Users can evaluate the workflow's retrieval performance. The platform uses a ground truth dataset and benchmarks the chunking strategy.
 
@@ -67,7 +60,7 @@ Users can evaluate the workflow's retrieval performance. The platform uses a gro
   allowfullscreen
 ></iframe>
 
-#### Comparison
+##### Comparison
 
 Users can create multiple workflows with different chunking strategies. The comparison view displays differences in chunk metrics and retrieval performance across all selected workflows.
 
@@ -78,11 +71,11 @@ Users can create multiple workflows with different chunking strategies. The comp
   allowfullscreen
 ></iframe>
 
-### ETL Pipeline Deployment
+#### ETL Pipeline Deployment
 
 After evaluating workflows, users can deploy them as ETL pipelines.
 
-#### Deploy Workflow
+##### Deploy Workflow
 
 Users select a workflow to deploy and provide their S3 bucket credentials. The platform provisions the ETL pipeline to ingest and process documents from the specified bucket. Once the database table is created in RDS, the platform returns an ARN that users can use to retrieve the RDS credentials required to access the chunks and embeddings.
 
