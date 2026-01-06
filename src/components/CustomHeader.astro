@@ -7,11 +7,23 @@ import "../style.css";
 ---
 
 <div class="header-custom">
+  <button class="hamburger" aria-label="Toggle navigation menu" id="hamburger">
+    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+    <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
   <div class="title-wrapper">
     <SiteTitle {...Astro.props} />
   </div>
 
-  <div class="nav-wrapper">
+  <div class="nav-wrapper" id="nav-wrapper">
     <nav class="navbar">
       <a href="/case_study/overview">Case Study</a>
       <a href="/team">Team</a>
@@ -23,3 +35,40 @@ import "../style.css";
     <SocialIcons {...Astro.props} />
   </div>
 </div>
+
+<script>
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const navWrapper = document.getElementById('nav-wrapper');
+  
+  if (hamburger && navWrapper) {
+    hamburger.addEventListener('click', () => {
+      navWrapper.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target as Node) && !navWrapper.contains(e.target as Node)) {
+        navWrapper.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+
+    // Close menu when clicking a nav link
+    const navLinks = navWrapper.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navWrapper.classList.remove('active');
+        hamburger.classList.remove('active');
+      });
+    });
+  }
+</script>
+
+<style>
+  .right-group :global(svg) {
+    width: 1.35rem !important;
+    height: 1.35rem !important;
+  }
+</style>

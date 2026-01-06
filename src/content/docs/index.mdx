@@ -7,17 +7,73 @@ template: splash
 editUrl: false
 hero:
   title: Chunkwise
-  tagline: An open-source, self-managed platform that evaluates chunking strategies and deploys ETL pipelines for RAG systems.
+  tagline: An open-source, self-managed platform to evaluate chunking strategies and deploy ETL pipelines for RAG applications.
   image:
     file: ../../assets/logos/logo.svg
   actions:
-    - text: Read the Case Study
+    - text: Read the case study
       link: /case_study/overview/
       icon: right-arrow
-    - text: Get Started with Chunkwise
+    - text: Get started
       link: https://github.com/Chunkwise/
       icon: external
-      variant: secondary
+      variant: minimal
 ---
 
-import "../../style.css"
+import "../../style.css";
+import { Steps } from "@astrojs/starlight/components";
+
+<div class="intro-section">
+  <h2>Evaluate, compare, and deploy chunking strategies</h2>
+  <p>Chunkwise provides a complete experimentation platform for RAG data pipelines. Test different chunking strategies, benchmark retrieval performance with ground truth datasets, and deploy optimized ETL pipelines to production.</p>
+</div>
+
+<Steps>
+
+1. **Visualize**
+
+   <iframe
+     src="https://player.mux.com/EtmZcnEvdKjmwkrlxtuW01ltkxjLpE01NqDb7Gfovday00?autoplay=true&loop=true&muted=true&accent-color=%2303B9F4"
+     style="width: 100%; border: none; aspect-ratio: 16/9; pointer-events: none; margin-bottom: 1rem;"
+     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+   ></iframe>
+
+   Create workflows, upload documents, and select chunking strategies. Adjust chunking configurations and see how documents are split into chunks.
+
+2. **Evaluate**
+
+   <iframe
+     src="https://player.mux.com/M6qKMJWCX3vNBHT5PXkC01WlVtwagYk00a02AjWtO01Qci00?autoplay=true&loop=true&muted=true&accent-color=%2303B9F4"
+     style="width: 100%; border: none; aspect-ratio: 16/9; pointer-events: none; margin-bottom: 1rem;"
+     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+   ></iframe>
+
+   Benchmark your chunking strategy's retrieval performance using a ground truth dataset to optimize for your use case.
+
+3. **Compare**
+
+   <iframe
+     src="https://player.mux.com/foK4BfNA0097npaJU01WEdb8ZgcFOvTdi02qn1Qqyvk8ec?autoplay=true&loop=true&muted=true&accent-color=%2303B9F4"
+     style="width: 100%; border: none; aspect-ratio: 16/9; pointer-events: none; margin-bottom: 1rem;"
+     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+   ></iframe>
+
+   Create multiple workflows with different chunking strategies and compare them side-by-side. View differences in chunk metrics and retrieval performance.
+
+4. **Deploy**
+
+   <iframe
+     src="https://player.mux.com/elugCFxBlwmGTN2AjOWqJzPKhl6AbMAO1mA016uHWSVs?autoplay=true&loop=true&muted=true&accent-color=%2303B9F4"
+     style="width: 100%; border: none; aspect-ratio: 16/9; pointer-events: none; margin-bottom: 1rem;"
+     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+   ></iframe>
+
+   Deploy your tested workflows as production ETL pipelines. Automatically provision infrastructure to ingest and process documents from your S3 bucket.
+
+</Steps>
+
+<div class="cta-section">
+  <h2>Learn how we built Chunkwise</h2>
+  <p>Read our case study to understand the architecture, design decisions, and challenges we faced while building a production-ready platform to evaluate chunking strategies and deploy ETL pipelines for RAG applications.</p>
+  <a href="/case_study/overview/" class="cta-button">Read the case study →</a>
+</div>
