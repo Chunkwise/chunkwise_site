@@ -38,6 +38,14 @@
 }
 
 /* ============================================
+   GLOBAL STYLES
+   ============================================ */
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
+/* ============================================
    TYPOGRAPHY
    ============================================ */
 h1,
@@ -711,6 +719,11 @@ dotlottie-wc {
   .sl-markdown-content img:not([src*="screenshots"]),
   dotlottie-wc {
     margin: var(--spacing-lg) 0;
+  }
+
+  .sl-markdown-content img[src*="screenshots"] {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Typography */
