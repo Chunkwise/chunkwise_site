@@ -406,13 +406,15 @@ dotlottie-wc {
 }
 
 /* Images */
-.sl-markdown-content img:not([src*="screenshots"]) {
+.sl-markdown-content img:not(.screenshot-image) {
   margin: var(--spacing-xl) 0;
 }
 
-.sl-markdown-content img[src*="screenshots"] {
-  margin: 0 !important;
-  padding: 0 !important;
+.sl-markdown-content .screenshot-image,
+.sl-markdown-content .screenshot-figure,
+.sl-markdown-content figure:has(.screenshot-image) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* Videos/Iframes */
@@ -716,14 +718,16 @@ dotlottie-wc {
 
   /* Media Elements */
   .sl-markdown-content iframe,
-  .sl-markdown-content img:not([src*="screenshots"]),
+  .sl-markdown-content img:not(.screenshot-image),
   dotlottie-wc {
     margin: var(--spacing-lg) 0;
   }
 
-  .sl-markdown-content img[src*="screenshots"] {
-    margin: 0 !important;
-    padding: 0 !important;
+  .sl-markdown-content .screenshot-image,
+  .sl-markdown-content .screenshot-figure,
+  .sl-markdown-content figure:has(.screenshot-image) {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   /* Typography */

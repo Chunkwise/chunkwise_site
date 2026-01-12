@@ -20,10 +20,13 @@ if (!imagePath) {
 }
 
 const imageMetadata = images[imagePath].default;
+
+// Check if this is a screenshot
+const isScreenshot = src.includes('screenshots');
 ---
 
-<figure>
+<figure class:list={[{ 'screenshot-figure': isScreenshot }]}>
   <Zoom label={alt} >
-    <Image src={imageMetadata} alt={alt} />
+    <Image src={imageMetadata} alt={alt} class:list={[{ 'screenshot-image': isScreenshot }]} />
   </Zoom>
 </figure>
