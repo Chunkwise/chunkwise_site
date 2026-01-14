@@ -211,6 +211,7 @@ header a {
   margin-top: var(--spacing-3xl) !important;
   padding: var(--spacing-xl) 0 !important;
   text-align: left !important;
+  max-width: 80% !important;
 }
 
 .intro-section h2 {
@@ -272,6 +273,7 @@ header a {
 .steps,
 .sl-steps {
   margin-top: var(--spacing-4xl) !important;
+  max-width: 80% !important;
 }
 
 .steps > ol > li,
@@ -514,6 +516,10 @@ dotlottie-wc {
     font-size: 18px;
   }
 
+  .title-wrapper .site-title {
+    gap: var(--spacing-sm);
+  }
+
   .hamburger {
     display: flex;
     order: -1;
@@ -662,6 +668,7 @@ dotlottie-wc {
   .intro-section {
     margin-top: var(--spacing-xl) !important;
     padding: var(--spacing-md) 0 !important;
+    max-width: 100% !important;
   }
 
   .intro-section h2,
@@ -683,6 +690,7 @@ dotlottie-wc {
   .steps,
   .sl-steps {
     margin-top: var(--spacing-2xl) !important;
+    max-width: 100% !important;
   }
 
   .steps strong,
